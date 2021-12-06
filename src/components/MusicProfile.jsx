@@ -20,6 +20,7 @@ const MusicProfile = () => {
   useEffect(() => {
     setColor(shuffle(colors).pop());
   }, []);
+
   return (
     <div className="flex-grow">
       <header className="absolute top-5 right-8">

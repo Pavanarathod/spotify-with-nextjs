@@ -8,9 +8,23 @@ import {
 
 import { PlusIcon } from "@heroicons/react/outline";
 import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import useSpotify from "../hooks/useSpotify";
+import spotifyApi from "../lib/spotify";
 
 const Sidebar = () => {
   const session = useSession();
+  const [playLists, setPlayLists] = useState([]);
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlayLists(data.body.items);
+      });
+    }
+  }, [session, spotifyApi]);
+
+  console.log(playLists);
 
   return (
     <div className="p-5 text-gray-200  text-sm border-r border-gray-900 overflow-y-scroll h-screen scrollbar-hide pr-14">
